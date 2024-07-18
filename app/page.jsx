@@ -28,7 +28,7 @@ const Home = () => {
 							exit="hidden"
 							className="h1"
 						>
-							Hello I'm <br />
+							Hello I&apos;m <br />
 							<span className="text-accent text-5xl">Shahroze Kamran</span>
 						</motion.h1>
 						<p className="max-w-[500px] mb-9 text-white/80 text-[16px] font-semibold text-justify">
