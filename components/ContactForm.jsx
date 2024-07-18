@@ -13,13 +13,41 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import emailjs from "emailjs-com";
 
 const ContactForm = ({ isDialogOpen, onClose }) => {
+	const [formData, setFormData] = useState({
+		firstname: "",
+		lastname: "",
+		email: "",
+		phone: "",
+		service: "",
+		message: "",
+	});
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({ ...formData, [name]: value });
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		toast.error(
-			"Message not sent at this time. Please contact directly on Email: Shahzaib201411@gmail.com"
-		);
+
+		emailjs
+			.send(
+				"service_mkyverp",
+				"template_9wkoino",
+				formData,
+				"062QrqU8Enk1it5Q6"
+			)
+			.then(
+				(response) => {
+					toast.success("Message sent successfully!");
+				},
+				(error) => {
+					toast.error("Failed to send message. Please try again later.");
+				}
+			);
 	};
 
 	return (
@@ -31,7 +59,6 @@ const ContactForm = ({ isDialogOpen, onClose }) => {
 				containerClassName=""
 				containerStyle={{}}
 				toastOptions={{
-					// Define default options
 					className: "",
 					duration: 5000,
 					style: {
@@ -41,13 +68,11 @@ const ContactForm = ({ isDialogOpen, onClose }) => {
 				}}
 			/>
 			<div className="flex flex-col xl:flex-row gap-[30px]">
-				{/* contactform */}
 				<div className="xl:w-[100%] order-2 xl:order-none">
 					<form
 						className="flex flex-col gap-2 p-10 bg-slate-800 rounded-xl"
 						onSubmit={handleSubmit}
 					>
-						{/* form close btn */}
 						{isDialogOpen && (
 							<div className="flex justify-end mb-4">
 								<button
@@ -69,42 +94,74 @@ const ContactForm = ({ isDialogOpen, onClose }) => {
 							create something truly impactful. Feel free to reach out and
 							let&apos;s discuss how I can help make your vision a reality.
 						</p>
-						{/* input */}
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<Input type="firstname" placeholder="Firstname" />
-							<Input type="lastname" placeholder="Lastname" />
-							<Input type="email" placeholder="Email" />
-							<Input type="phon" placeholder="Phone number" />
+							<Input
+								type="text"
+								name="firstname"
+								placeholder="Firstname"
+								value={formData.firstname}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="text"
+								name="lastname"
+								placeholder="Lastname"
+								value={formData.lastname}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="email"
+								name="email"
+								placeholder="Email"
+								value={formData.email}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="text"
+								name="phone"
+								placeholder="Phone number"
+								value={formData.phone}
+								onChange={handleInputChange}
+							/>
 						</div>
-						{/* select */}
-						<Select>
+						<Select
+							onValueChange={(value) =>
+								setFormData({ ...formData, service: value })
+							}
+						>
 							<SelectTrigger className="w-full">
 								<SelectValue placeholder="Select a service" />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
 									<SelectLabel>Select a service</SelectLabel>
-									<SelectItem value="wd">Web Development</SelectItem>
-									<SelectItem value="md">Mobile Development</SelectItem>
-									<SelectItem value="ui">UI/UX Design</SelectItem>
-									<SelectItem value="dav">
+									<SelectItem value="Web Development">
+										Web Development
+									</SelectItem>
+									<SelectItem value="Mobile Development">
+										Mobile Development
+									</SelectItem>
+									<SelectItem value="UI/UX Design">UI/UX Design</SelectItem>
+									<SelectItem value="Data Analysis & Visualization">
 										Data Analysis & Visualization
 									</SelectItem>
-									<SelectItem value="tw">
-										Software Documentatino & Technical Writing
+									<SelectItem value="Software Documentation & Technical Writing">
+										Software Documentation & Technical Writing
 									</SelectItem>
-									<SelectItem value="ai">Gen AI Development</SelectItem>
+									<SelectItem value="Gen AI Development">
+										Gen AI Development
+									</SelectItem>
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{/* textarea */}
 						<Textarea
 							className="h-[200px]"
+							name="message"
 							placeholder="Type your message here."
+							value={formData.message}
+							onChange={handleInputChange}
 						/>
-
-						{/* button */}
-						<Button className="max-w-40 ">Send message</Button>
+						<Button className="max-w-40">Send message</Button>
 					</form>
 				</div>
 			</div>
