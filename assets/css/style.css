@@ -723,49 +723,97 @@ main {
  * #testimonials 
  */
 
-.testimonials {
+ .testimonials {
     position: relative;
-    width: 100%;
     margin-bottom: 12px;
-    overflow-x: scroll; /* Show horizontal scrollbar */
-    padding: 0; /* Remove bottom padding */
-    scrollbar-width: thin; /* Firefox scrollbar width */
-    scrollbar-color: var(--orange-yellow-crayola) var(--onyx); /* Firefox scrollbar handle and track color */
+    padding: 0;
+    overflow: hidden;
 }
-
-/* Webkit Browsers (Chrome, Safari) */
-.testimonials::-webkit-scrollbar {
-    height: 5px; /* for horizontal scrollbar */
+.testimonials-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 10px; /* Adjust this value for side margins */
+    width: 100%; /* Ensure the container takes full width */
 }
-
-.testimonials::-webkit-scrollbar-track {
-    background: var(--onyx);
-    border-radius: 5px;
-    margin: 0 10px; /* Add margin to the track from both sides */
-}
-
-.testimonials::-webkit-scrollbar-thumb {
-    background: var(--orange-yellow-crayola);
-    border-radius: 5px;
-}
-
-.testimonials::-webkit-scrollbar-button {
-    width: 20px;
-}
-
 .testimonials-title {
     margin-bottom: 20px;
 }
-
+.testimonials-item-title {
+	margin-bottom: 7px;
+}
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 10; /* Ensure arrows are on top */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+.carousel-arrow:active {
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.left-arrow {
+    left: 10px;
+}
+.right-arrow {
+    right: 10px;
+}
 .testimonials-list {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 30px;
+    gap: 30px; /* Adjust the gap between items */
     list-style: none;
-    padding: 30px 30px 20px 30px; /* Adjust bottom padding to reduce space */
+    padding: 30px 0 20px 0; /* Adjust padding for spacing */
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
     overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    width: 100%;
+}
+.testimonials-list::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Webkit browsers */
+}
+.testimonials-item {
+    flex: 0 0 50%; /* Each item takes 50% of the container width */
+    scroll-snap-align: start;
+    box-sizing: border-box; /* Include padding and border in width */
+	min-width: 100%;
+}
+.testimonials-avatar-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translate(15px, -25px);
+	border-radius: 14px;
+}
+.testimonials-text {
+	color: var(--light-gray);
+	font-size: var(--fs-6);
+	font-weight: var(--fw-300);
+	line-height: 1.6;
+	display: -webkit-box;
+	line-clamp: 4;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 .testimonials-list1 {
 	display: flex;
@@ -782,10 +830,7 @@ main {
 	scroll-snap-type: inline mandatory;
 }
 
-.testimonials-item {
-	min-width: 100%;
-	scroll-snap-align: center;
-}
+
 .testimonials-avatar-box1 {
 	border-radius: 14px;
 	padding: 5px;
@@ -797,30 +842,7 @@ main {
 	font-weight: bold; /* Adjust as needed */
 }
 
-.testimonials-avatar-box {
-	position: absolute;
-	top: 0;
-	left: 0;
-	transform: translate(15px, -25px);
 
-	border-radius: 14px;
-}
-
-.testimonials-item-title {
-	margin-bottom: 7px;
-}
-
-.testimonials-text {
-	color: var(--light-gray);
-	font-size: var(--fs-6);
-	font-weight: var(--fw-300);
-	line-height: 1.6;
-	display: -webkit-box;
-	line-clamp: 4;
-	-webkit-line-clamp: 4;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-}
 
 #tech-stack {
 	color: var(--light-gray);
@@ -828,16 +850,34 @@ main {
 }
 
 #tech-stack1 {
-	list-style: decimal inside;
-	padding-left: 20px;
-	color: var(--light-gray);
-	text-align: justify;
+    list-style-type: disc; /* Use disc for bullets */
+    padding-left: 20px; /* Adjust padding for indentation */
+    color: var(--light-gray); /* Text color */
+    text-align: justify; /* Justify text */
 }
 
 /* Additional styling for list items */
 #tech-stack1 li {
-	margin-bottom: 5px;
-	font-size: 14px;
+    margin-bottom: 5px; /* Space between list items */
+    font-size: 14px; /* Font size for list items */
+}
+.custom-bullets {
+	list-style:none; /* Remove default bullets */
+	padding-left: 0; /* Remove default padding */
+}
+
+.custom-bullets li {
+	position: relative;
+	padding-left: 30px; /* Add padding for custom bullets */
+}
+
+.custom-bullets li::before {
+	content: '•'; /* Custom bullet character */
+	position: absolute;
+	left: 0;
+	color: var(--light-gray); /* Bullet color */
+	font-size: 16px; /* Bullet size */
+	line-height: 1; /* Align bullet with text */
 }
 
 ul.skills-list {
@@ -1020,7 +1060,7 @@ data {
 .carousel-container {
 	position: relative;
 	width: 100%;
-	overflow-x: scroll; /* Show horizontal scrollbar */
+	overflow-x: hidden; /* Show horizontal scrollbar */
 	padding: 0 0 20px 0;
 	scrollbar-width: thin; /* Firefox scrollbar width */
 	scrollbar-color: var(--orange-yellow-crayola) var(--onyx); /* Firefox scrollbar handle and track color */
@@ -1979,6 +2019,7 @@ textarea.form-input::-webkit-resizer {
 		margin: 0 -30px;
 		padding: 30px;
 		padding-bottom: 35px;
+		overflow: hidden;
 	}
 
 	.testimonials-list1 {

@@ -209,3 +209,74 @@ document.addEventListener("DOMContentLoaded", function () {
 //       content.value = quill.root.innerHTML;
 //     };
 //   });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	const testimonialsList = document.querySelector(".testimonials-list");
+	const testimonialsItems = Array.from(
+		document.querySelectorAll(".testimonials-item")
+	);
+	const leftArrow = document.querySelector(".left-arrow");
+	const rightArrow = document.querySelector(".right-arrow");
+
+	let currentIndex = 0;
+
+	function scrollToIndex(index) {
+		testimonialsItems[index].scrollIntoView({
+			behavior: "smooth",
+			block: "nearest",
+			inline: "start",
+		});
+	}
+
+	leftArrow.addEventListener("click", () => {
+		currentIndex =
+			currentIndex > 0 ? currentIndex - 1 : testimonialsItems.length - 1;
+		scrollToIndex(currentIndex);
+	});
+
+	rightArrow.addEventListener("click", () => {
+		currentIndex =
+			currentIndex < testimonialsItems.length - 1 ? currentIndex + 1 : 0;
+		scrollToIndex(currentIndex);
+	});
+
+	// Initialize view to the first item
+	scrollToIndex(currentIndex);
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	const testimonialsList = document.querySelector(".testimonials-list");
+	const testimonialsItems = Array.from(
+		document.querySelectorAll(".testimonials-item")
+	);
+	const leftArrow = document.querySelector(".left-arrow");
+	const rightArrow = document.querySelector(".right-arrow");
+
+	let currentIndex = 0;
+
+	function scrollToIndex(index) {
+		testimonialsItems[index].scrollIntoView({
+			behavior: "smooth",
+			block: "nearest",
+			inline: "start",
+		});
+	}
+
+	leftArrow.addEventListener("click", () => {
+		currentIndex =
+			currentIndex > 0 ? currentIndex - 1 : testimonialsItems.length - 1;
+		scrollToIndex(currentIndex);
+	});
+
+	rightArrow.addEventListener("click", () => {
+		currentIndex =
+			currentIndex < testimonialsItems.length - 1 ? currentIndex + 1 : 0;
+		scrollToIndex(currentIndex);
+	});
+
+	// Initialize view to the first item
+	scrollToIndex(currentIndex);
+});
+
