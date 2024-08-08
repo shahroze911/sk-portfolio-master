@@ -1056,34 +1056,19 @@ data {
 	margin: 0;
 	padding: 10px 0;
 	text-align: center;
-}
-.carousel-container {
+}.carousel-container {
 	position: relative;
 	width: 100%;
-	overflow-x: hidden; /* Show horizontal scrollbar */
+	overflow-x: scroll; /* Enable horizontal scrolling */
+	overflow-y: hidden; /* Hide vertical overflow */
 	padding: 0 0 20px 0;
-	scrollbar-width: thin; /* Firefox scrollbar width */
-	scrollbar-color: var(--orange-yellow-crayola) var(--onyx); /* Firefox scrollbar handle and track color */
+	scrollbar-width: none; /* Hide scrollbar in Firefox */
+	-ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer and Edge */
 }
 
 /* Webkit Browsers (Chrome, Safari) */
 .carousel-container::-webkit-scrollbar {
-	height: 5px; /* for horizontal scrollbar */
-}
-
-.carousel-container::-webkit-scrollbar-track {
-	background: var(--onyx);
-	border-radius: 5px;
-	margin: 0 10px; /* Add margin to the track from both sides */
-}
-
-.carousel-container::-webkit-scrollbar-thumb {
-	background: var(--orange-yellow-crayola);
-	border-radius: 5px;
-}
-
-.carousel-container::-webkit-scrollbar-button {
-	width: 20px;
+	display: none; /* Hide scrollbar in WebKit-based browsers */
 }
 
 .clients {
